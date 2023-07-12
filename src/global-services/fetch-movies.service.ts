@@ -5,19 +5,21 @@ import { Cron, CronExpression } from '@nestjs/schedule';
 import { env } from 'src/environment/env';
 import { Movie } from 'src/objects/movie/movie.schema';
 import { MovieService } from 'src/objects/movie/movie.service';
+import { TopTenListService } from 'src/objects/top-ten-list/top-ten-list.service';
+import { TopTenList } from 'src/objects/top-ten-list/top-ten-list.schema';
 
 @Injectable()
 export class FetchMoviesService {
   constructor(
     private readonly httpService: HttpService,
-    private movieService: MovieService
+    private movieService: MovieService,
+    private topTenListService: TopTenListService
   ) { }
 
   private readonly logger = new Logger(FetchMoviesService.name);
 
   @Cron(CronExpression.EVERY_HOUR)
   fetchMovies() {
-    this.logger.debug('Movies fetched');
     combineLatest([
       this.httpService.get(`${env.tmdbAPI.address}/movie/popular?api_key=${env.tmdbAPI.key}&region=BR`),
       this.httpService.get(`${env.tmdbAPI.address}/genre/movie/list?api_key=${env.tmdbAPI.key}&region=BR`),
@@ -49,8 +51,6 @@ export class FetchMoviesService {
         }
       });
 
-      const topTen: string[] = movies.slice(0, 10).map(m => m._id);
-
       for (const movie of movies.slice(0, 10)) {
         if (savedMovies[movie._id]) {
           await this.movieService.update(movie._id, movie);
@@ -58,6 +58,19 @@ export class FetchMoviesService {
           await this.movieService.create(movie);
         }
       }
+      this.logger.debug('Movies fetched');
+
+      const topTenList: TopTenList = {
+        topTenMovies: movies.slice(0, 10).map(m => m._id)
+      };
+      const oldTopTenList = await this.topTenListService.get();
+
+      if (oldTopTenList == null) {
+        this.topTenListService.create(topTenList);
+      } else if (JSON.stringify([... oldTopTenList.topTenMovies].sort()) !== JSON.stringify(([... topTenList.topTenMovies].sort()))) {
+        this.topTenListService.update(topTenList);
+      }
+      this.logger.debug('Top ten updated');
 
     });
   }
