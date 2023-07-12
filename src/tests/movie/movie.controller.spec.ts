@@ -1,10 +1,10 @@
 import { Test, TestingModule } from "@nestjs/testing";
 import { MongoMemoryServer } from "mongodb-memory-server";
-import { Connection, connect, Model, MongooseError } from "mongoose";
+import { Connection, connect, Model } from "mongoose";
 import { getModelToken } from "@nestjs/mongoose";
-import { MovieController } from "../../../objects/movie/movie.controller";
-import { MovieService } from "../../../objects/movie/movie.service";
-import { Movie, MovieSchema } from "../../../objects/movie/movie.schema";
+import { MovieController } from "../../objects/movie/movie.controller";
+import { MovieService } from "../../objects/movie/movie.service";
+import { Movie, MovieSchema } from "../../objects/movie/movie.schema";
 import { MovieStub } from "./movie.stub";
 import { JwtService } from "@nestjs/jwt";
 

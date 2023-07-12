@@ -2,7 +2,7 @@ import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards } from '@nes
 import { UserService } from './user.service';
 import { User } from './user.schema';
 import * as bcrypt from 'bcrypt';
-import { AuthGuard } from './../../auth/auth.guard';
+// import { AuthGuard } from './../../auth/auth.guard';
 
 @Controller('users')
 export class UserController {
