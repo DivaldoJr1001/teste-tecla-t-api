@@ -1,12 +1,11 @@
 import { Controller, Get } from '@nestjs/common';
-import { AppService } from './app.service';
+import { FetchMoviesService } from './global_services/fetch-movies.service';
 
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService) {}
-
-  @Get()
-  getHello(): string {
-    return this.appService.getHello();
+  constructor(
+    private readonly fetchMoviesService: FetchMoviesService
+  ) {
+    setTimeout( () => { fetchMoviesService.fetchMovies(); }, 500 );
   }
 }
