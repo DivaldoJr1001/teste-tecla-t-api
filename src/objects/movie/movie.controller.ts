@@ -18,25 +18,23 @@ export class MovieController {
     return await this.movieService.getById(id);
   }
 
-  // @UseGuards(AuthGuard)
-  // @Post('/create')
-  // async createMovie(@Body() movie: Movie) {
-  //   const newMovie = await this.movieService.create(movie);
-  //   return newMovie;
-  // }
-
   @UseGuards(AuthGuard)
-  @Put('/update/:id')
-  async updateMovie(
-    @Param('id') id: string,
-    @Body() movie: Movie,
+  @Put('/like/:id')
+  async likeMovie(
+    @Param('id') id: string
   ) {
+    const movie = await this.movieService.getById(id);
+    movie.likes_count = movie.likes_count++;
     return await this.movieService.update(id, movie);
   }
 
-  // @UseGuards(AuthGuard)
-  // @Delete('/delete/:id')
-  // async deleteMovie(@Param('id') id: string) {
-  //   await this.movieService.delete(id);
-  // }
+  @UseGuards(AuthGuard)
+  @Put('/like/:id')
+  async removeLikeMovie(
+    @Param('id') id: string
+  ) {
+    const movie = await this.movieService.getById(id);
+    movie.likes_count = movie.likes_count == 0 ? movie.likes_count : movie.likes_count--;
+    return await this.movieService.update(id, movie);
+  }
 }
