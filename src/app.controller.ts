@@ -1,5 +1,5 @@
 import { Controller, Get } from '@nestjs/common';
-import { FetchMoviesService } from './global_services/fetch-movies.service';
+import { FetchMoviesService } from './global-services/fetch-movies.service';
 
 @Controller()
 export class AppController {
