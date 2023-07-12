@@ -5,6 +5,8 @@ import { ScheduleModule } from '@nestjs/schedule';
 import { FetchMoviesService } from './global_services/fetch-movies.service';
 import { HttpModule } from '@nestjs/axios';
 import { MovieModule } from './objects/movie/movie.module';
+import { UserModule } from './objects/user/user.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -14,7 +16,9 @@ import { MovieModule } from './objects/movie/movie.module';
       timeout: 5000,
       maxRedirects: 5,
     }),
-    MovieModule
+    AuthModule,
+    MovieModule,
+    UserModule
   ],
   controllers: [AppController],
   providers: [
