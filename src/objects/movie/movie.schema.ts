@@ -3,45 +3,45 @@ import { HydratedDocument } from 'mongoose';
 
 export type MovieDocument = HydratedDocument<Movie>;
 
-@Schema({collection:'Movies'})
+@Schema({ collection: 'Movies' })
 export class Movie {
-  @Prop()
+  @Prop({ required: true })
   _id: string;
 
-  @Prop()
+  @Prop({ required: true })
   adult: boolean;
 
-  @Prop()
+  @Prop({ required: true })
   backdrop_path: string;
 
-  @Prop()
+  @Prop({ required: true })
   genres: string[];
 
-  @Prop()
+  @Prop({ required: true })
   original_language: string;
 
-  @Prop()
+  @Prop({ required: true })
   original_title: string;
 
-  @Prop()
+  @Prop({ required: true })
   overview: string;
 
-  @Prop()
+  @Prop({ required: true })
   popularity: number;
 
-  @Prop()
+  @Prop({ required: true })
   poster_path: string;
 
-  @Prop()
+  @Prop({ required: true })
   release_date: string;
 
-  @Prop()
+  @Prop({ required: true })
   title: string;
 
-  @Prop()
+  @Prop({ required: true })
   video: boolean;
 
-  @Prop()
+  @Prop({ required: true })
   likes_count: number;
 }
 

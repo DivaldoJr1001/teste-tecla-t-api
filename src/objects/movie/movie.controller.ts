@@ -13,9 +13,9 @@ export class MovieController {
   }
 
   @Get("/id/:id")
-    async getById(@Param('id') id:string){
-        return await this.movieService.getById(id);
-    }
+  async getById(@Param('id') id: string) {
+    return await this.movieService.getById(id);
+  }
 
   @Post('/create')
   async createMovie(@Body() movie: Movie) {
@@ -33,7 +33,7 @@ export class MovieController {
 
 
   @Delete('/delete/:id')
-  async deleteMovie(@Param('id') id:string){
+  async deleteMovie(@Param('id') id: string) {
     await this.movieService.delete(id);
   }
 }
