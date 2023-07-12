@@ -1,6 +1,7 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards } from '@nestjs/common';
 import { MovieService } from './movie.service';
 import { Movie } from './movie.schema';
+import { AuthGuard } from './../../auth/auth.guard';
 
 @Controller('movies')
 export class MovieController {
@@ -17,12 +18,14 @@ export class MovieController {
     return await this.movieService.getById(id);
   }
 
-  @Post('/create')
-  async createMovie(@Body() movie: Movie) {
-    const newMovie = await this.movieService.create(movie);
-    return newMovie;
-  }
+  // @UseGuards(AuthGuard)
+  // @Post('/create')
+  // async createMovie(@Body() movie: Movie) {
+  //   const newMovie = await this.movieService.create(movie);
+  //   return newMovie;
+  // }
 
+  @UseGuards(AuthGuard)
   @Put('/update/:id')
   async updateMovie(
     @Param('id') id: string,
@@ -31,9 +34,9 @@ export class MovieController {
     return await this.movieService.update(id, movie);
   }
 
-
-  @Delete('/delete/:id')
-  async deleteMovie(@Param('id') id: string) {
-    await this.movieService.delete(id);
-  }
+  // @UseGuards(AuthGuard)
+  // @Delete('/delete/:id')
+  // async deleteMovie(@Param('id') id: string) {
+  //   await this.movieService.delete(id);
+  // }
 }
