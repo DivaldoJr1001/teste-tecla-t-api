@@ -46,12 +46,12 @@ describe("TopTenListController", () => {
   });
 
   describe("[GET]", () => {
-    it("Busca a lista de IDs dos 10 filmes mais populares", async () => {
+    it("(get) Busca a lista de IDs dos 10 filmes mais populares", async () => {
       await (new topTenListModel(TopTenListStub()).save());
       const topTenList = await topTenListController.get();
       expect(topTenList.topTenMovies).toEqual(TopTenListStub().topTenMovies);
     });
-    it("Busca a lista de IDs dos 10 filmes mais popula e não a encontra", async () => {
+    it("(get) Busca a lista de IDs dos 10 filmes mais popula e não a encontra", async () => {
       const topTenLists = await topTenListController.get();
       expect(topTenLists).toBeNull();
     });

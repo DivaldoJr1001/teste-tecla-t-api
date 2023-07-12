@@ -46,60 +46,53 @@ describe("MovieController", () => {
   });
 
   describe("[GET]", () => {
-    it("Busca todos os objetos", async () => {
+    it("(getAll) Busca todos os objetos", async () => {
       await (new movieModel(MovieStub()).save());
       const movies = await movieController.getAll();
       expect(movies.map(m => m._id)).toStrictEqual([MovieStub()._id]);
     });
-    it("Busca um objeto por ID e o retorna", async () => {
+    it("(getById) Busca um objeto por ID e o retorna", async () => {
       await (new movieModel(MovieStub()).save());
       const movie = await movieController.getById(MovieStub()._id);
       expect(movie._id).toBe(MovieStub()._id);
     });
-    it("Busca um objeto por ID e não o encontra", async () => {
+    it("(getById) Busca um objeto por ID e não o encontra", async () => {
       const movie = await movieController.getById(MovieStub()._id);
       expect(movie).toBeNull();
     });
   });
 
-  // describe("[POST]", () => {
-  //   it("Cria o objeto pela primeira vez", async () => {
-  //     const createdMovie = await movieController.createMovie(MovieStub());
-  //     expect(createdMovie.title).toBe(MovieStub().title);
-  //   });
-  //   it("Tenta criar um objeto idêntico e retorna erro de objeto duplicado", async () => {
-  //     await (new movieModel(MovieStub()).save());
-  //     await expect(movieController.createMovie(MovieStub()))
-  //       .rejects
-  //       .toThrow(Error)
-  //   });
-  // });
-
   describe("[PUT]", () => {
-    it("Atualiza um objeto salvo pelo seu ID", async () => {
+    it("(likeMovie) Registra um Like em um filme", async () => {
       await (new movieModel(MovieStub()).save());
       const updatedMovieObject = {
         ...MovieStub(),
-        title: "Updated Title"
+        likes_count: MovieStub().likes_count++
       };
-      const updatedMovie = await movieController.updateMovie(MovieStub()._id, updatedMovieObject);
-      expect(updatedMovie.title).toBe(updatedMovieObject.title);
+      const updatedMovie = await movieController.likeMovie(MovieStub()._id);
+      expect(updatedMovie.likes_count).toBe(updatedMovieObject.likes_count);
     });
-    it("Não encontra o ID do objeto a atualizar e retorna null", async () => {
-      const res = await movieController.updateMovie(MovieStub()._id, MovieStub());
-      expect(res).toBeNull();
+    it("(removeLikeMovie) Remove um Like de um filme", async () => {
+      const newMovie = {
+        ...MovieStub(),
+        likes_count: 5
+      }
+      await (new movieModel(newMovie).save());
+      const updatedMovieObject = {
+        ...newMovie,
+        likes_count: newMovie.likes_count--
+      };
+      const updatedMovie = await movieController.removeLikeMovie(newMovie._id);
+      expect(updatedMovie.likes_count).toBe(updatedMovieObject.likes_count);
+    });
+    it("(removeLikeMovie) Tenta remover um Like de um filme quando já possui 0 Likes", async () => {
+      await (new movieModel(MovieStub()).save());
+      const updatedMovieObject = {
+        ...MovieStub(),
+        likes_count: 0
+      };
+      const updatedMovie = await movieController.removeLikeMovie(MovieStub()._id);
+      expect(updatedMovie.likes_count).toBe(updatedMovieObject.likes_count);
     });
   });
-
-  // describe("[DELETE]", () => {
-  //   it("Deleta um objeto pelo seu ID", async () => {
-  //     await (new movieModel(MovieStub()).save());
-  //     const savedMovie = await movieController.getById(MovieStub()._id);
-  //     await movieController.deleteMovie(MovieStub()._id);
-  //     const deletedMovie = await movieController.getById(MovieStub()._id);
-
-  //     expect(savedMovie._id).toBe(MovieStub()._id);
-  //     expect(deletedMovie).toBeNull();
-  //   });
-  // });
 });
