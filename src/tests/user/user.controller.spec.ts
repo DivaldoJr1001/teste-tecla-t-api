@@ -43,6 +43,17 @@ describe("UserController", () => {
     }
   });
 
+  describe("[GET]", () => {
+    it("(getUser) Busca um usuário por nome de usuário e o retorna sem a senha", async () => {
+      await (new userModel(UserStub()).save());
+      const user = await userController.getUser(UserStub().username);
+      expect(user).toStrictEqual({
+        username: UserStub().username,
+        liked_movies: UserStub().liked_movies
+      });
+    });
+  });
+
   describe("[POST]", () => {
     it("(createUser) Cria o objeto pela primeira vez", async () => {
       const createdUser = await userController.createUser(UserStub());

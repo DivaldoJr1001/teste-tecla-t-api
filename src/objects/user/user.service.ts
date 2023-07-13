@@ -14,7 +14,16 @@ export class UserService {
   }
 
   async getByUsername(username: string) {
-    return await this.userModel.findOne({ username })
+    return await this.userModel.findOne({ username });
+  }
+
+  async getByUsernameWithoutPass(username: string) {
+    const user: User = await this.userModel.findOne({ username });
+    const resUser = {
+      username: user.username,
+      liked_movies: user.liked_movies
+    };
+    return resUser;
   }
 
   async create(user: User) {

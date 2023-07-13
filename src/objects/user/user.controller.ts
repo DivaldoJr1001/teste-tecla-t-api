@@ -18,4 +18,12 @@ export class UserController {
     });
     return newUser;
   }
+
+  @Get('/:username')
+  async getUser(
+    @Param('username') username: string
+  ) {
+    console.log(username);
+    return await this.userService.getByUsernameWithoutPass(username);
+  }
 }
