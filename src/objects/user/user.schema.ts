@@ -8,8 +8,8 @@ export class User {
   @Prop({ unique: true, required: true })
   username: string;
 
-  @Prop({ required: true })
-  password: string;
+  @Prop()
+  password?: string;
 
   @Prop()
   liked_movies?: string[];
