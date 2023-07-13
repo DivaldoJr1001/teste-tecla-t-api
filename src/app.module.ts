@@ -8,6 +8,7 @@ import { MovieModule } from './objects/movie/movie.module';
 import { UserModule } from './objects/user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { TopTenListModule } from './objects/top-ten-list/top-ten-list.module';
+import { MovieLikesModule } from './objects/movie-likes/movie-likes.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { TopTenListModule } from './objects/top-ten-list/top-ten-list.module';
     }),
     AuthModule,
     MovieModule,
+    MovieLikesModule,
     UserModule,
     TopTenListModule
   ],
