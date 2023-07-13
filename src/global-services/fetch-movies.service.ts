@@ -58,7 +58,6 @@ export class FetchMoviesService {
           await this.movieService.create(movie);
         }
       }
-      this.logger.debug('Movies fetched');
 
       const topTenList: TopTenList = {
         topTenMovies: movies.slice(0, 10).map(m => m._id)
@@ -70,8 +69,7 @@ export class FetchMoviesService {
       } else if (JSON.stringify([... oldTopTenList.topTenMovies].sort()) !== JSON.stringify(([... topTenList.topTenMovies].sort()))) {
         this.topTenListService.update(topTenList);
       }
-      this.logger.debug('Top ten updated');
-
+      this.logger.debug('Movies fetched');
     });
   }
 }
