@@ -67,7 +67,7 @@ describe("MovieController", () => {
       await (new movieModel(MovieStub()).save());
       const updatedMovieObject = {
         ...MovieStub(),
-        likes_count: MovieStub().likes_count++
+        likes_count: MovieStub().likes_count + 1
       };
       const updatedMovie = await movieController.likeMovie(MovieStub()._id);
       expect(updatedMovie.likes_count).toBe(updatedMovieObject.likes_count);
@@ -80,7 +80,7 @@ describe("MovieController", () => {
       await (new movieModel(newMovie).save());
       const updatedMovieObject = {
         ...newMovie,
-        likes_count: newMovie.likes_count--
+        likes_count: newMovie.likes_count - 1
       };
       const updatedMovie = await movieController.removeLikeMovie(newMovie._id);
       expect(updatedMovie.likes_count).toBe(updatedMovieObject.likes_count);
