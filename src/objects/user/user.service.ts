@@ -23,7 +23,7 @@ export class UserService {
       username: user.username,
       liked_movies: user.liked_movies
     };
-    return resUser
+    return resUser;
   }
 
   async create(user: User) {

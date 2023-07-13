@@ -21,8 +21,9 @@ export class UserController {
 
   @Get('/:username')
   async getUser(
-    @Param() username: string
+    @Param('username') username: string
   ) {
+    console.log(username);
     return await this.userService.getByUsernameWithoutPass(username);
   }
 }
