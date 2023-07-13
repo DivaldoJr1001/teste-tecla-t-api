@@ -7,6 +7,8 @@ import { MovieService } from "../../objects/movie/movie.service";
 import { Movie, MovieSchema } from "../../objects/movie/movie.schema";
 import { MovieStub } from "./movie.stub";
 import { JwtService } from "@nestjs/jwt";
+import { UserService } from "../../objects/user/user.service";
+import { User } from "../../objects/user/user.schema";
 
 
 describe("MovieController", () => {
@@ -14,6 +16,7 @@ describe("MovieController", () => {
   let mongod: MongoMemoryServer;
   let mongoConnection: Connection;
   let movieModel: Model<Movie>;
+  let userModel: Model<User>;
 
   beforeAll(async () => {
     mongod = await MongoMemoryServer.create();
@@ -24,8 +27,10 @@ describe("MovieController", () => {
       controllers: [MovieController],
       providers: [
         MovieService,
+        UserService,
         JwtService,
         {provide: getModelToken(Movie.name), useValue: movieModel},
+        {provide: getModelToken(User.name), useValue: userModel},
       ],
     }).compile();
     movieController = movie.get<MovieController>(MovieController);
