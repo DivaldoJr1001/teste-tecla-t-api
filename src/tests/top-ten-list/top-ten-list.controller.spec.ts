@@ -6,7 +6,6 @@ import { TopTenListController } from "../../objects/top-ten-list/top-ten-list.co
 import { TopTenListService } from "../../objects/top-ten-list/top-ten-list.service";
 import { TopTenList, TopTenListSchema } from "../../objects/top-ten-list/top-ten-list.schema";
 import { TopTenListStub } from "./top-ten-list.stub";
-import { JwtService } from "@nestjs/jwt";
 
 
 describe("TopTenListController", () => {
@@ -24,7 +23,6 @@ describe("TopTenListController", () => {
       controllers: [TopTenListController],
       providers: [
         TopTenListService,
-        JwtService,
         {provide: getModelToken(TopTenList.name), useValue: topTenListModel},
       ],
     }).compile();

@@ -6,7 +6,6 @@ import { UserController } from "../../objects/user/user.controller";
 import { UserService } from "../../objects/user/user.service";
 import { User, UserSchema } from "../../objects/user/user.schema";
 import { UserStub } from "./user.stub";
-import { JwtService } from "@nestjs/jwt";
 
 
 describe("UserController", () => {
@@ -24,7 +23,6 @@ describe("UserController", () => {
       controllers: [UserController],
       providers: [
         UserService,
-        JwtService,
         {provide: getModelToken(User.name), useValue: userModel},
       ],
     }).compile();
