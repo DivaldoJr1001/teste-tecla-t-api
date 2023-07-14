@@ -23,7 +23,6 @@ export class UserController {
   async getUser(
     @Param('username') username: string
   ) {
-    console.log(username);
     return await this.userService.getByUsernameWithoutPass(username);
   }
 }
